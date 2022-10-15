@@ -1,5 +1,4 @@
-const screenA = document.querySelector('.screenA');
-const screenB = document.querySelector('.screenB');
+const screenDisplay = document.querySelector('.screen');
 const buttons = document.querySelectorAll('button[id]')
 const clear = document.querySelector('.clear')
 const plus = document.querySelector('.plus')
@@ -7,17 +6,18 @@ const minus = document.querySelector('.minus')
 const mlt = document.querySelector('.multi')
 const dvid = document.querySelector('.divide')
 const oper = document.querySelector('.equals')
-const dec = document.querySelector('.dec')
+const remain = document.querySelector('.remainder')
 
-let de = 0.0;
 let result;
+let remove = false;
 let number = 0;
 let number2 = 0;
 let clicked1 = false;
 let clicked2 = false;
 let clicked3 = false;
 let clicked4 = false;
-
+let clicked5 = false;
+let clicked6 = false;
 
 function add() {
 
@@ -31,10 +31,7 @@ function add() {
 }
 
 function sub() {
-    let c = Number(a);
-    let d = Number(b);
-
-    let x = (c - d);
+    let x = (number - number2);
 
     console.log(x);
     result = x;
@@ -42,43 +39,44 @@ function sub() {
 }
 
 function multi() {
-    let c = Number(a);
-    let d = Number(b);
-
-    let x = (c * d);
+    let x = (number * number2);
 
     console.log(x);
-    result = x;
+    result = parseFloat(x.toFixed(5));;
     return result;
 }
 
 function div() {
-    let c = Number(a);
-    let d = Number(b);
-
-    let x = (c / d);
+    let x = (number / number2);
 
     console.log(x);
-    result = x;
+    result = parseFloat(x.toFixed(5));
+    return result;
+}
+
+function rem() {
+    let x = (number % number2);
+
+    console.log(x);
+    result = parseFloat(x.toFixed(5));
     return result;
 }
 
 buttons.forEach(btn => {
-    btn.addEventListener('click', function () {
-        inputNumber(this.id)
-    });
+    while (clicked1 === false && clicked2 === false && clicked3 === false && clicked4 === false && clicked5 === false && clicked6 === false) {
+        btn.addEventListener('click', function () {
+            inputNumber(this.id)
+        });
+        break;
+    }
 });
 
-function remove() {
-    if (clicked1 === true || clicked2 === true || clicked3 === true || clicked4 === true) {
-        btn.removeEventListener('click');
-    }
-}
+
 
 const inputNumber = a => {
-    let screenNumber = screenA.innerHTML;
-    if (screenNumber.length < 16) {
-        screenA.innerHTML = parseInt(screenNumber + a).toString();
+    let screenNumber = screenDisplay.innerHTML;
+    if (screenNumber.length < 16 && clicked1 == false && clicked2 == false && clicked3 == false && clicked4 == false && clicked5 == false && clicked6 === false) {
+        screenDisplay.innerHTML = parseFloat(screenNumber + a).toString();
         number = Number(screenNumber + a);
         a = 0;
         return number;
@@ -86,9 +84,9 @@ const inputNumber = a => {
 }
 
 const enterNumber = b => {
-    let screenNumber2 = screenB.innerHTML;
-    if (screenNumber2.length < 16) {
-        screenB.innerHTML = parseInt(screenNumber2 + b).toString();
+    let screenNumber2 = screenDisplay.innerHTML;
+    if (screenNumber2.length < 16 && (clicked1 == true || clicked2 == true || clicked3 == true || clicked4 == true || clicked6 === true)) {
+        screenDisplay.innerHTML = parseFloat(screenNumber2 + b).toString();
         number2 = Number(screenNumber2 + b);
         b = 0;
         console.log(number);
@@ -96,109 +94,201 @@ const enterNumber = b => {
     }
 }
 
-//dec.addEventListener('click', function () {
-    //let screenNumber = screenDisplay.innerHTML;
-    //if (clicked1 == false && clicked2 == false && clicked3 == false && clicked4 == false && clicked5 == false) {
-        //screenDisplay.innerHTML = screenNumber.toString + ".";
-        //number = Number(screenNumber);
-        //a = number;
-        //console.log(a);
-        //return a;
-    //}
-    //if (clicked1 == true || clicked2 == true || clicked3 == true || clicked4 == true && clicked5 == false) {
-        //screenDisplay.innerHTML = parseFloat(screenNumber + de).toString();
-        //number = Number(screenNumber);
-        //b = number;
-        //console.log(b);
-        //return b;
-    //}
-//})
-
-
-
-
 
 clear.addEventListener('click', function () {
         window.location.reload();
 });
 
-plus.addEventListener('click', function () {
-    clicked1 = true;
-    console.log(clicked1);
-    operate(number)
+plus.addEventListener('click', function (e) {
+    if (clicked1 == false) {
+        let screenNumber = screenDisplay.innerHTML;
+        screenNumber = 0;
+        screenDisplay.innerHTML = parseFloat(screenNumber).toString();
+        console.log(screenDisplay);
+        clicked1 = true;
+        console.log(clicked1);
+        operate(number)
+    }
 });
 
 minus.addEventListener('click', function () {
-    let screenNumber = screenDisplay.innerHTML;
-    screenNumber = 0;
-    screenDisplay.innerHTML = parseInt(screenNumber).toString();
-    console.log(screenDisplay);
-    clicked2 = true;
-    console.log(clicked2);
-    operate(a)
+    if (clicked2 == false) {
+        let screenNumber = screenDisplay.innerHTML;
+        screenNumber = 0;
+        screenDisplay.innerHTML = parseFloat(screenNumber).toString();
+        console.log(screenDisplay);
+        clicked2 = true;
+        console.log(clicked2);
+        operate(number)
+    }
 });
 
 mlt.addEventListener('click', function () {
-    let screenNumber = screenDisplay.innerHTML;
-    screenNumber = 0;
-    screenDisplay.innerHTML = parseInt(screenNumber).toString();
-    console.log(screenDisplay);
-    clicked3 = true;
-    console.log(clicked3);
-    operate(a)
+    if (clicked3 == false) {
+        let screenNumber = screenDisplay.innerHTML;
+        screenNumber = 0;
+        screenDisplay.innerHTML = parseFloat(screenNumber).toString();
+        console.log(screenDisplay);
+        clicked3 = true;
+        console.log(clicked3);
+        operate(number)
+    }
 });
 
 dvid.addEventListener('click', function () {
-    let screenNumber = screenDisplay.innerHTML;
-    screenNumber = 0;
-    screenDisplay.innerHTML = parseInt(screenNumber).toString();
-    console.log(screenDisplay);
-    clicked4 = true;
-    console.log(clicked4);
-    operate(a)
+    if (clicked4 == false) {
+        let screenNumber = screenDisplay.innerHTML;
+        screenNumber = 0;
+        screenDisplay.innerHTML = parseFloat(screenNumber).toString();
+        console.log(screenDisplay);
+        clicked4 = true;
+        console.log(clicked4);
+        operate(number)
+        return;
+    }
 });
 
+remain.addEventListener('click', function () {
+    if (clicked6 == false) {
+        let screenNumber = screenDisplay.innerHTML;
+        screenNumber = 0;
+        screenDisplay.innerHTML = parseFloat(screenNumber).toString();
+        console.log(screenDisplay);
+        clicked6 = true;
+        console.log(clicked6);
+        operate(number)
+        return;
+    }
+});
+
+function blah() {
+    remove = true;
+    enterNumber(this.id)
+}
+
 function operate() {
-    if (clicked1 == true) {
-        buttons.forEach(btn => {
-            btn.addEventListener('click', function () {
-                enterNumber(this.id)
-            });
-        });
+    while (clicked1 == true) {
+        buttons.forEach(btn => 
+            btn.addEventListener('click', blah));
+            if (remove) {
+                buttons.forEach(btn => btn.removeEventListener('click', blah))
+            }
+
+        break;
     }
-    else if (clicked2 == true) {
-        buttons.forEach(btn => {
-            btn.addEventListener('click', function () {
-                enterNumber(this.id)
-            });
-        });
+    while (clicked2 == true) {
+        buttons.forEach(btn => 
+            btn.addEventListener('click', blah));
+            if (remove) {
+                buttons.forEach(btn => btn.removeEventListener('click', blah))
+            }
+
+        break;
     }
-    else if (clicked3 == true) {
-        buttons.forEach(btn => {
-            btn.addEventListener('click', function () {
-                enterNumber(this.id)
-            });
-        }); 
+    while (clicked3 == true) {
+        buttons.forEach(btn => 
+            btn.addEventListener('click', blah));
+            if (remove) {
+                buttons.forEach(btn => btn.removeEventListener('click', blah))
+            }
+
+        break;
     }
-    else if (clicked4 == true) {
-        buttons.forEach(btn => {
-            btn.addEventListener('click', function () {
-                enterNumber(this.id)
-            });
-        });
+    while (clicked4 == true) {
+        buttons.forEach(btn => 
+            btn.addEventListener('click', blah));
+            if (remove) {
+                buttons.forEach(btn => btn.removeEventListener('click', blah))
+            }
+
+        break;
+    }
+    while (clicked6 == true) {
+        buttons.forEach(btn => 
+            btn.addEventListener('click', blah));
+            if (remove) {
+                buttons.forEach(btn => btn.removeEventListener('click', blah))
+            }
+
+        break;
     }
 }
 
+
+
 oper.addEventListener('click', function () {
     if (clicked1 == true) {
+        clicked5 = true;
         clicked1 = false;
+        remove = false;
         console.log(clicked1);
         add(number, number2);
         console.log("this is the result" + result);
         number = result;
-        screenA.innerHTML = parseInt(number).toString();
-        screenB.innerHTML = parseInt(number2).toString();
+        number2 = 0;
+        screenDisplay.innerHTML = parseFloat(number).toString();
         return result;
     }
-    
+    else if (clicked2 == true) {
+        clicked5 = true;
+        clicked2 = false;
+        remove = false;
+        console.log(clicked1);
+        sub(number, number2);
+        console.log("this is the result" + result);
+        number = result;
+        number2 = 0;
+        screenDisplay.innerHTML = parseFloat(number).toString();
+        return result;
+    }
+    else if (clicked3 == true) {
+        clicked5 = true;
+        clicked3 = false;
+        remove = false;
+        console.log(clicked1);
+        multi(number, number2);
+        console.log("this is the result" + result);
+        number = result;
+        number2 = 0;
+        screenDisplay.innerHTML = parseFloat(number).toString();
+        return result;
+    }
+    else if (clicked4 == true) {
+        clicked5 = true;
+        clicked4 = false;
+        remove = false;
+        console.log(clicked1);
+        div(number, number2);
+        console.log("this is the result" + result);
+        number = result;
+        number2 = 0;
+        screenDisplay.innerHTML = parseFloat(number).toString();
+        return result;
+    }
+    else if (clicked4 == true) {
+        clicked5 = true;
+        clicked4 = false;
+        remove = false;
+        console.log(clicked1);
+        div(number, number2);
+        console.log("this is the result" + result);
+        number = result;
+        number2 = 0;
+        screenDisplay.innerHTML = parseFloat(number).toString();
+        return result;
+    }
+    else if (clicked6 == true) {
+        clicked5 = true;
+        clicked6 = false;
+        remove = false;
+        console.log(clicked1);
+        div(number, number2);
+        console.log("this is the result" + result);
+        number = result;
+        number2 = 0;
+        screenDisplay.innerHTML = parseFloat(number).toString();
+        return result;
+    }
+    this.removeEventListener('click', arguments.callee);
+
 });
